@@ -1,12 +1,13 @@
 import { BookOpenIcon, Bot, LogOut, X } from 'lucide-react'
 
-function Sidebar({ showSidebar }) {
+function Sidebar({ onClose }) {
+
   return (
-    <div className="fixed inset-y-0 left-0 top-0 w-[50%] bg-gray-100 dark:bg-gray-900 border-r border-gray-300 dark:border-gray-700 p-4 md:static md:w-64 flex flex-col justify-between h-screen md:flex md:flex-col md:justify-between md:h-screen">
+    <div className="fixed inset-y-0 left-0 top-0 w-[50%] bg-gray-100 dark:bg-gray-900 p-4 md:static md:w-64 flex flex-col justify-between h-screen md:flex md:flex-col md:justify-between md:h-screen shadow-2xl">
       {/* Header */}
       <div className='flex items-center justify-between '>
         <div className='text-xl font-bold'><Bot /></div>
-        <button onClick={showSidebar}><X /></button>
+        <button onClick={onClose}><X /></button>
       </div>
 
       {/* History */}
@@ -22,7 +23,7 @@ function Sidebar({ showSidebar }) {
             <img className='rounded-full w-8 h-8' src='' alt="" />
             <span className=''>user name</span>
           </div>
-          <button className='flex items-center text-sm gap-2 px-4 py-2 rounded-lg  transition bg-gray-200 px-2 py-1 hover:bg-gray-300'><LogOut />Logout</button>
+          <button className='flex items-center text-sm gap-2 rounded-lg  transition bg-gray-200 px-2 py-1 hover:bg-gray-300'><LogOut />Logout</button>
         </div>
       </div>
     </div>

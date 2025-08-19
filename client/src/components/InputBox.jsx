@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import FileUpload from './FileUpload';
 
 function InputBox({ onSend }) {
-
+  // Audio Detection code
   const [message, setMessage] = useState('');
   const [listening, setListening] = useState(false);
   const recognitionRef = useRef(null);
@@ -11,12 +11,10 @@ function InputBox({ onSend }) {
   useEffect(() => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) return;
-
     const recognition = new SpeechRecognition();
     recognition.continuous = true;
     recognition.interimResults = true;
     recognition.lang = "en-US";
-
     recognition.onresult = (event) => {
       let interim = "";
       let final = "";
@@ -30,7 +28,6 @@ function InputBox({ onSend }) {
       }
       setMessage(final + interim); // live text in input
     };
-
     recognitionRef.current = recognition;
   }, []);
 
@@ -45,6 +42,7 @@ function InputBox({ onSend }) {
     }
   };
 
+  // File upload code
   const handleUpload = (file) => {
     console.log('Uploading:', file.name);
     // You can send this to backend or preview it
@@ -55,36 +53,41 @@ function InputBox({ onSend }) {
     fileInputRef.current?.click();
   };
 
+  // Input Send
   const handleSend = () => {
     if (message.trim()) {
       onSend(message);
       setMessage('');
     }
   };
+
   return (
     <div className="p-3 rounded-full border shadow-xl m-6 dark:border-gray-700">
       <div className="flex flex-col items-center bg-transparent dark:bg-gray-800 ">
+        {/* Input area */}
         <input
           type="text"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleSend()}
           placeholder="Ask a question..."
-          className="flex-grow w-full focus:outline-none bg-transparent text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 px-4 py-2 rounded-lg"
+          className="flex-grow mt-2 w-full focus:outline-none bg-transparent text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 px-4 py-2 rounded-lg"
         />
         <div className='flex items-center justify-end w-full mt-2 px-4 space-x-4'>
+          {/* File Upload Button */}
           <button
             className="ml-2 text-indigo-600 hover:text-indigo-800 dark:text-blue-400 dark:hover:text-blue-300"
           >
             <FileUpload onUpload={handleUpload} />
           </button>
+          {/* Voice Button */}
           <button
             onClick={handleToggleListening}
             className={`${listening ? "text-red-800" : "text-indigo-600"} `}
           >
             {listening ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
           </button>
-
+          {/* Send Button */}
           <button
             onClick={handleSend}
             className="ml-2 text-indigo-600 hover:text-indigo-800 dark:text-blue-400 dark:hover:text-blue-300"
