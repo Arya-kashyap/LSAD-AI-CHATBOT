@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom'
 function Navbar({ isSidebarOpen, showSidebar }) {
 
      return (
-          <div className='flex items-center justify-between  dark:bg-gray-900 p-4 '>
-               <div>
+          <div className='flex items-center justify-between bg-gray-100 dark:bg-[#232327] p-4 shadow-2xl'>
+               <div >
                     {!isSidebarOpen && (
                          <PanelLeftOpen
-                              className="w-6 h-6 cursor-pointer absolute top-4 left-4 text-gray-700"
+                              className="w-6 h-6 cursor-pointer absolute top-4 left-4 text-gray-700 dark:text-white"
                               onClick={showSidebar}
                          />
                     )}

@@ -10,11 +10,11 @@ function ChatInterface({ messages }) {
      }, [messages]);
 
      return (
-          <div className="flex-1 overflow-y-auto p-6 space-y-4">
+          <div className="flex-1 scrollbar-thin dark:scrollbar-track-transparent scrollbar-thumb-white/20 overflow-y-auto p-6 space-y-4">
                {
                     messages && messages.length > 0 ? (
                          messages.map((msg, idx) => (
-                              <div key={idx} className={`p-4 rounded-lg ${msg.role === 'user' ? 'text-right font-bold bg-gray-100 py-1 rounded-xl' : 'text-left'}`}>
+                              <div key={idx} className={`p-4 rounded-lg ${msg.role === 'user' ? 'text-right font-bold bg-gray-100 dark:bg-zinc-800 py-1 rounded-xl' : 'text-left'}`}>
                                    <p className="text-gray-800 dark:text-gray-100">{msg.content}</p>
                               </div>
                          ))
@@ -24,7 +24,7 @@ function ChatInterface({ messages }) {
                                    <Bot className='text-indigo-800 w-8 h-8' />
                                    <h2>Hi! I'm AI Chatbot</h2>
                               </div>
-                              <p className='text-sm text-gray-700'>How can I help you, Today?</p>
+                              <p className='text-sm text-gray-700 dark:text-gray-300'>How can I help you, Today?</p>
                          </div>
                     )
                }

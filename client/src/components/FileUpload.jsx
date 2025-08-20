@@ -24,7 +24,7 @@ export default function FileUpload({ onUpload }) {
                {/* Plus Button */}
                <button
                     onClick={handleClick}
-                    className="ml-2 text-indigo-600 hover:text-indigo-800 dark:text-blue-400 dark:hover:text-blue-300"
+                    className="ml-2 text-indigo-600 hover:text-indigo-800"
                     aria-label="Upload File"
                >
                     <Plus />

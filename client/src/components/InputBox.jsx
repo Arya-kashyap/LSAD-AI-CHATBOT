@@ -62,8 +62,8 @@ function InputBox({ onSend }) {
   };
 
   return (
-    <div className="p-3 rounded-full border shadow-xl m-6 dark:border-gray-700">
-      <div className="flex flex-col items-center bg-transparent dark:bg-gray-800 ">
+    <div className="py-1 px-2 rounded-3xl border shadow-2xl m-6 dark:border-gray-700">
+      <div className="flex flex-col items-center rounded-3xl bg-transparent ">
         {/* Input area */}
         <input
           type="text"
@@ -71,26 +71,26 @@ function InputBox({ onSend }) {
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleSend()}
           placeholder="Ask a question..."
-          className="flex-grow mt-2 w-full focus:outline-none bg-transparent text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 px-4 py-2 rounded-lg"
+          className="flex-grow m-2 px-4 py-1 w-full focus:outline-none bg-transparent text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-lg"
         />
         <div className='flex items-center justify-end w-full mt-2 px-4 space-x-4'>
           {/* File Upload Button */}
           <button
-            className="ml-2 text-indigo-600 hover:text-indigo-800 dark:text-blue-400 dark:hover:text-blue-300"
+            className="ml-2 text-indigo-600 hover:text-indigo-800 "
           >
-            <FileUpload onUpload={handleUpload} />
+            <FileUpload className="w-5 h-5" onUpload={handleUpload} />
           </button>
           {/* Voice Button */}
           <button
             onClick={handleToggleListening}
-            className={`${listening ? "text-red-800" : "text-indigo-600"} `}
+            className={`${listening ? "text-red-800" : "text-indigo-600 hover:text-indigo-800"} `}
           >
             {listening ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
           </button>
           {/* Send Button */}
           <button
             onClick={handleSend}
-            className="ml-2 text-indigo-600 hover:text-indigo-800 dark:text-blue-400 dark:hover:text-blue-300"
+            className="ml-2 text-indigo-600 hover:text-indigo-800 "
           >
             <Send className="w-5 h-5" />
           </button>
