@@ -5,7 +5,7 @@ import Signin from './components/Signin'
 
 function App() {
   return (
-    <div className="max-w-full max-h-dvh overflow-hidden">
+    <div className="max-w-full max-h-svh overflow-auto ">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/signin" element={<Signin />} />
