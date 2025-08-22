@@ -11,7 +11,7 @@ const ChatInterface = ({ messages }) => {
   }, [messages]);
 
   return (
-    <div  className={`max-w-4xl mx-auto space-y-5 py-5
+    <div  className={`max-w-4xl mx-auto space-y-8 py-5
     ${messages && messages.length > 0 ? 'overflow-y-auto flex-1' : 'flex flex-col justify-center items-center h-full'}`}>
       {
         messages && messages.length > 0 ? (

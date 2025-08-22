@@ -3,7 +3,7 @@ import InputBox from "./InputBox";
 
 const MainContent = ({ messages, handleSend }) => {
   return (
-    <main className="flex  flex-col flex-1 w-screen h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 pt-14">
+    <main className="flex  flex-col flex-1 w-screen h-[calc(100vh-4rem)] md:h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 pt-14">
       
       {/* Chat Area */}
       <div className="flex-1 overflow-y-auto scrollbar-thin space-y-5 scrollbar-thumb-gray-400 scrollbar-track-transparent px-6">

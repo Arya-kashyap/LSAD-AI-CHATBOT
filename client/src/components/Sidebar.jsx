@@ -16,7 +16,7 @@ const Sidebar = ({ Visible, toggleSidebar, messages, newChat }) => {
       </div>
 
       {/* Sidebar Content */}
-      <div className="flex flex-col h-[calc(100vh-4rem)]"> {/* Adjust height to exclude header */}
+      <div className="flex flex-col h-[calc(100vh-7rem)] md:h-[calc(100vh-4rem)]"> {/* Adjust height to exclude header */}
 
         {/* New Chat Button */}
         <div className="w-full py-4">
