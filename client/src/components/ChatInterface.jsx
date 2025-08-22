@@ -1,37 +1,38 @@
-import { Bot } from 'lucide-react'
-import React, { useRef, useEffect } from 'react'
+import { Bot } from "lucide-react";
+import { useRef, useEffect } from "react";
 
-function ChatInterface({ messages }) {
-     // Auto Scrolling Code
-     const bottomRef = useRef(null);
+const ChatInterface = ({ messages }) => {
 
-     useEffect(() => {
-          bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-     }, [messages]);
+  // Auto Scrolling Code
+  const bottomRef = useRef(null);
 
-     return (
-          <div className="flex-1 scrollbar-thin dark:scrollbar-track-transparent scrollbar-thumb-white/20 overflow-y-auto p-6 space-y-4">
-               {
-                    messages && messages.length > 0 ? (
-                         messages.map((msg, idx) => (
-                              <div key={idx} className={`p-4 rounded-lg ${msg.role === 'user' ? 'text-right font-bold bg-gray-100 dark:bg-zinc-800 py-1 rounded-xl' : 'text-left'}`}>
-                                   <p className="text-gray-800 dark:text-gray-100">{msg.content}</p>
-                              </div>
-                         ))
-                    ) : (
-                         <div className='flex flex-col items-center pt-36 md:pt-32'>
-                              <div className='flex items-center justify-center text-3xl space-x-3'>
-                                   <Bot className='text-indigo-800 w-8 h-8' />
-                                   <h2>Hi! I'm AI Chatbot</h2>
-                              </div>
-                              <p className='text-sm text-gray-700 dark:text-gray-300'>How can I help you, Today?</p>
-                         </div>
-                    )
-               }
-               <div ref={bottomRef} />
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
+  return (
+    <div  className={`max-w-4xl mx-auto space-y-5 py-5
+    ${messages && messages.length > 0 ? 'overflow-y-auto flex-1' : 'flex flex-col justify-center items-center h-full'}`}>
+      {
+        messages && messages.length > 0 ? (
+          messages.map((msg, idx) => (
+            <div key={idx} className={`rounded-lg  ${msg.role === 'user' ? 'text-right font-bold text-base py-2 px-3 rounded-xl bg-gray-100 dark:bg-gray-800' : 'px-3 text-left'}`}>
+              <p className="text-gray-800 dark:text-gray-100">{msg.content}</p>
+            </div>
+          ))
+        ) : (
+          <div className='flex  flex-col '>
+            <div className='flex items-center justify-center text-3xl space-x-3'>
+              <Bot className='text-indigo-800 w-8 h-8' />
+              <h2>Hi! I'm AI Chatbot</h2>
+            </div>
+            <p className='text-sm text-gray-700 dark:text-gray-300'>How can I help you, Today?</p>
           </div>
-     )
-}
+        )
+      }
+      <div ref={bottomRef} />
+    </div>
+  );
+};
 
-
-export default ChatInterface
+export default ChatInterface;

@@ -1,65 +1,51 @@
-import { X } from 'lucide-react';
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-const Signup = () => {
+export default function Signup() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white dark:bg-[#232323] px-4">
-      <div className="w-full max-w-md bg-gray-300 dark:bg-zinc-700 rounded-lg shadow-2xl p-6 relative">
-        <div className='absolute right-3 top-3 p-0 cursor-pointer rounded-md'>
-          <Link to={'/'}><X /></Link>
-        </div>
-        <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-white mb-6">
-          Create an Account
-        </h2>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
+      <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 space-y-6">
+        <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-white">Create an Account</h2>
+
         <form className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 px-1">
-              Name
-            </label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
             <input
               type="text"
-              className="mt-1 w-full px-4 py-2 border rounded-md bg-gray-100  focus:outline-none "
-              placeholder="Arya Sharma"
+              className="mt-1 w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              placeholder="Your name"
             />
           </div>
+
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 px-1">
-              Email
-            </label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
             <input
               type="email"
-              className="mt-1 w-full px-4 py-2 border rounded-md bg-gray-100  focus:outline-none "
-              placeholder="arya@example.com"
+              className="mt-1 w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              placeholder="you@example.com"
             />
           </div>
+
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 px-1">
-              Password
-            </label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
             <input
               type="password"
-              className="mt-1 w-full px-4 py-2 border rounded-md bg-gray-100  focus:outline-none "
+              className="mt-1 w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
               placeholder="••••••••"
             />
           </div>
+
           <button
             type="submit"
-            className="w-full py-2 px-4 bg-indigo-600 hover:bg-indigo-800 text-white font-semibold rounded-md transition duration-200"
+            className="w-full py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-md transition"
           >
             Sign Up
           </button>
         </form>
-        <p className="mt-4 text-sm text-center text-gray-600 dark:text-gray-300">
-          Already have an account?{" "}
-          <Link to={"/signin"} className="text-blue-500 hover:underline">
-            Sign in
-          </Link>
+
+        <p className="text-sm text-center text-gray-600 dark:text-gray-400">
+          Already have an account? <Link to="/signin" className="text-indigo-600 hover:underline">Log in</Link>
         </p>
       </div>
     </div>
   );
-};
-
-export default Signup;
-
+}

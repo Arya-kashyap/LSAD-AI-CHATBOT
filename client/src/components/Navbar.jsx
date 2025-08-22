@@ -1,26 +1,32 @@
-import { PanelRightOpen, PanelLeftOpen } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { useState } from "react";
+import { PanelLeftOpen } from 'lucide-react';
+import {Link} from 'react-router-dom'
 
-function Navbar({ isSidebarOpen, showSidebar }) {
+const Navbar = ({toggleSidebar}) => {
+  const [isOpen, setIsOpen] = useState(false);
+  
+  return (
+    <nav className="fixed top-0 right-0 left-0 w-full z-30 bg-white dark:bg-gray-900 shadow-md">
+      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-14">
+          {/* Sidebar Button */}
+          <button onClick={toggleSidebar} className="text-xl font-bold text-gray-800 dark:text-white cursor-pointer">
+            <PanelLeftOpen />
+          </button>
 
-     return (
-          <div className='flex items-center justify-between bg-gray-100 dark:bg-[#232327] p-4 shadow-2xl'>
-               <div >
-                    {!isSidebarOpen && (
-                         <PanelLeftOpen
-                              className="w-6 h-6 cursor-pointer absolute top-4 left-4 text-gray-700 dark:text-white"
-                              onClick={showSidebar}
-                         />
-                    )}
-               </div>
-               <div className='text-xl font-bold'>
-                    AI Chatbot
-               </div>
-               <div>
-                    <Link to={'/signin'} className='bg-indigo-600 hover:bg-indigo-800 text-white px-2 py-1 rounded-md'>Sign In</Link>
-               </div>
+          {/* Name */}
+          <div className="text-xl font-bold text-gray-800 dark:text-white">
+            Ai Chatbot
           </div>
-     )
-}
 
-export default Navbar
+          {/* Sign Up Button */}
+          <div className="">
+            <Link to={'/signin'} className="text-white bg-blue-800 hover:bg-blue-700 px-2 py-1 rounded-md">Sign In</Link>
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;

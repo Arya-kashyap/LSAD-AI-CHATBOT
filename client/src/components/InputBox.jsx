@@ -62,8 +62,8 @@ function InputBox({ onSend }) {
   };
 
   return (
-    <div className="py-1 px-2 rounded-3xl border shadow-2xl m-6 dark:border-gray-700">
-      <div className="flex flex-col items-center rounded-3xl bg-transparent ">
+    <div className="max-w-4xl mx-auto border shadow-2xl dark:border-gray-700 p-2 rounded-3xl bg-gray-100 dark:bg-gray-800">
+      <div className="flex flex-col w-full bg-transparent rounded-3xl p-1">
         {/* Input area */}
         <input
           type="text"
@@ -71,7 +71,7 @@ function InputBox({ onSend }) {
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleSend()}
           placeholder="Ask a question..."
-          className="flex-grow m-2 px-4 py-1 w-full focus:outline-none bg-transparent text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-lg"
+          className="flex-grow  w-full focus:outline-none bg-transparent text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-lg"
         />
         <div className='flex items-center justify-end w-full mt-2 px-4 space-x-4'>
           {/* File Upload Button */}
