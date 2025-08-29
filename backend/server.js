@@ -1,8 +1,8 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import { connectDB } from '../utils/dbConnect.js';
-import userRoute from '../routes/userRoute.js';
-import promptRoute from '../routes/promptRoute.js';
+import { connectDB } from './utils/dbConnect.js';
+import userRoute from './routes/userRoute.js';
+import promptRoute from './routes/promptRoute.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
