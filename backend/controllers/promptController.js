@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import { connectDB } from '../utils/dbConnect.js'; // optional utility
 import { Groq } from 'groq-sdk';
 import Prompt from '../models/promptModel.js';
 
@@ -15,6 +16,8 @@ export const SendPrompt = async (req, res) => {
   }
 
   try {
+    await connectDB(); // ensures MongoDB is connected (optional but recommended)
+
     const trimmedContent = content.trim();
 
     // Save user prompt

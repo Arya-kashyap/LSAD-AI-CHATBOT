@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import bcrypt from 'bcryptjs';
+import { connectDB } from '../utils/dbConnect.js';
 import jwt from 'jsonwebtoken';
 import User from '../models/userModel.js';
 import Prompt from '../models/promptModel.js';
@@ -27,6 +28,7 @@ export const signup = async (req, res) => {
   }
 
   try {
+    await connectDB();
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(409).json({ error: 'User already exists' });
@@ -56,6 +58,7 @@ export const login = async (req, res) => {
   }
 
   try {
+    await connectDB();
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
@@ -90,8 +93,9 @@ export const login = async (req, res) => {
 };
 
 // ✅ Logout
-export const logout = (req, res) => {
+export const logout =async (req, res) => {
   try {
+    await connectDB();
     res.clearCookie('token');
     return res.status(200).json({ message: 'Logout successful' });
   } catch (err) {
@@ -109,6 +113,7 @@ export const userHistory = async (req, res) => {
   }
 
   try {
+    await connectDB();
     const history = await Prompt.find({ userId, role: 'user' })
       .sort({ createdAt: -1 })
       .select('content createdAt')
