@@ -34,6 +34,6 @@ mongoose.connect(MONGO_URI)
 app.use('/api/users', userRoute);
 app.use('/api/prompts', promptRoute);
 
-app.listen(port, () => {
-     console.log(`Server is running on http://localhost:${port}`);
-});
+// app.listen(port, () => {
+//      console.log(`Server is running on http://localhost:${port}`);
+// });
