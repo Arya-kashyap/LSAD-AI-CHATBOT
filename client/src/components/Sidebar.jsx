@@ -1,54 +1,140 @@
 import { Bot, LogOut, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useAuth } from "../context/AuthProvider";
+import { useNavigate } from "react-router-dom";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 
-const Sidebar = ({ Visible, toggleSidebar, messages, newChat }) => {
+const Sidebar = ({ visible, toggleSidebar, messages, newChat }) => {
   const [showLogout, setShowLogout] = useState(false);
+  const [history, setHistory] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const navigate = useNavigate();
+  const {authToken, setAuthToken} = useAuth();
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  // Fetch user prompt history when messages change
+  useEffect(() => {
+    const fetchHistory = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) throw new Error("Missing auth token");
+
+        const { data } = await axios.post(
+          `${BACKEND_URL}/api/users/history`,
+          {},
+          {
+            headers: { Authorization: `Bearer ${token}` },
+            withCredentials: true,
+          }
+        );
+
+        setHistory(data.history || []);
+      } catch (err) {
+        console.error("Error fetching user history:", err);
+        setError(err.response?.data?.error || "Failed to load history");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchHistory();
+  }, [messages]);
+
+  // Handle logout
+  const handleLogout = async () => {
+    try {
+      const { data } = await axios.post(`${BACKEND_URL}/api/users/logout`, {}, { withCredentials: true });
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+      setAuthToken(null);
+      alert(data.message || "Logged out");
+      navigate("/signin");
+    } catch (err) {
+      console.error("Logout error:", err);
+      alert("Logout failed");
+    }
+  };
 
   return (
     <aside
-      className={`fixed top-0 left-0 h-screen w-[60%] md:static md:w-[20%] bg-gray-100 dark:bg-gray-950 text-gray-800 dark:text-gray-100 p-2 transition-transform duration-300 ease-in-out z-40
-    ${Visible ? "translate-x-0" : "-translate-x-full"}`}
+      className={`fixed top-0 left-0 h-[calc(100vh-4rem)] md:h-full box-border shadow-2xl overflow-hidden w-[60%] md:static md:w-[24%] bg-gray-200 dark:bg-gray-800 text-black dark:text-gray-100 p-2 transition-transform duration-300 ease-in-out z-40 ${
+        visible ? "translate-x-0" : "-translate-x-full"
+      }`}
+      aria-label="Sidebar navigation"
     >
       {/* Header */}
       <div className="flex items-center justify-between px-3 py-3">
-        <Bot />
-        <button onClick={toggleSidebar}><X /></button>
+        <Bot aria-hidden="true" />
+        <button onClick={toggleSidebar} aria-label="Close sidebar">
+          <X />
+        </button>
       </div>
 
-      {/* Sidebar Content */}
-      <div className="flex flex-col h-[calc(100vh-7rem)] md:h-[calc(100vh-4rem)]"> {/* Adjust height to exclude header */}
+      {/* New Chat Button */}
+      <div className="w-full py-1">
+        <button
+          onClick={newChat}
+          className="w-full py-2 bg-indigo-600 hover:bg-indigo-800 text-white rounded-xl mb-3"
+        >
+          + New Chat
+        </button>
+        <h3 className="font-bold px-1">Chat History</h3>
+      </div>
 
-        {/* New Chat Button */}
-        <div className="w-full py-4">
-          <button onClick={newChat} className='w-full py-2 bg-indigo-600 hover:bg-indigo-800 text-white rounded-xl'>+ New Chat</button>
-        </div>
-
-        {/* Chat History */}
-        <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 dark:scrollbar-thumb-white/20 scrollbar-track-transparent space-y-4 py-4">
-          <div className="dark:text-gray-300 text-gray-900 text-sm text-center">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolores debitis officia assumenda veniam qui et rerum, recusandae voluptatibus, beatae nulla nobis dicta ut soluta eveniet! Qui deserunt officiis non unde perferendis accusantium natus dolor minus praesentium assumenda sed, eaque labore nesciunt voluptates, autem at magni iste vitae. Culpa eaque non perspiciatis voluptatum alias sapiente temporibus deserunt minima reiciendis blanditiis consequuntur, molestiae necessitatibus quaerat iste provident tempora dolore doloremque, optio, at totam hic debitis labore nobis! Iure provident numquam illum? Consequuntur blanditiis sapiente saepe earum debitis similique odit, voluptatem accusantium ipsum totam delectus minima mollitia eaque incidunt eveniet, sunt molestiae quia! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Reiciendis enim hic aliquid. Ab quam quas, vel fuga iusto sint libero quo deserunt minus accusantium praesentium maxime esse perferendis quos quod odit aliquid debitis, earum qui nisi non beatae rerum blanditiis ipsa? Pariatur, suscipit rerum odio exercitationem deserunt dolore facilis? Quam, beatae totam! Quibusdam aliquid necessitatibus, hic labore sequi suscipit possimus rem voluptatem reiciendis, harum officiis sint dicta atque, esse saepe cum aspernatur quas! Eligendi nesciunt quaerat sapiente minus. Cum tempore reprehenderit odit perspiciatis saepe similique non aliquam veniam, corrupti animi libero? Neque atque natus reiciendis animi beatae. Excepturi, pariatur veniam.</div>
-          {/* Future chat items go here */}
-        </div>
-
-        {/* Footer */}
-        <div className="dark:bg-gray-800 bg-gray-200 rounded-xl ">
-          <div
-            className="flex items-center gap-x-3 cursor-pointer px-3 py-3"
-            onClick={(prev) => setShowLogout(prev => !prev)}
-          >
-            <img className="rounded-full w-8 h-8" src="" alt="" />
-            <span>user name</span>
+      {/* Chat History */}
+      <div className="flex-1 h-3/4 md:h-2/3 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 dark:scrollbar-thumb-white/20 scrollbar-track-transparent space-y-3 py-3 px-1">
+        {loading ? (
+          <p className="text-sm text-gray-500 dark:text-gray-400">Loading history...</p>
+        ) : error ? (
+          <p className="text-sm text-red-500">{error}</p>
+        ) : history.length === 0 ? (
+          <p className="text-sm text-gray-500 dark:text-gray-400">No chat history yet.</p>
+        ) : (
+          <div className="dark:text-gray-100 text-black">
+            {history.map((p, index) => (
+              <div key={index} className="py-1">
+                <div className="p-2 hover:bg-gray-300 hover:dark:bg-gray-700 rounded-lg cursor-pointer">
+                  <p>{p.content?.trim() || "[No content]"}</p>
+                  <small className="text-gray-400 dark:text-gray-600 text-sm">
+                    {new Date(p.createdAt).toLocaleString()}
+                  </small>
+                </div>
+              </div>
+            ))}
           </div>
-
-          {showLogout && (
-            <button className="fixed left-3 bottom-16 flex z-50 items-center text-sm gap-2 rounded-lg transition bg-gray-200 px-2 py-1 hover:bg-gray-300 dark:bg-gray-600 hover:dark:bg-gray-500">
-              <LogOut />
-              Logout
-            </button>
-          )}
-        </div>
+        )}
       </div>
-    </aside>
 
+      {/* Footer with user info and logout */}
+      <footer className="dark:bg-gray-700 bg-gray-300 rounded-xl mb-6 md:mb-0">
+        <div
+          className="flex items-center gap-x-3 cursor-pointer p-4"
+          onClick={() => setShowLogout((prev) => !prev)}
+          aria-label="Toggle logout"
+        >
+          <img
+            className="rounded-full w-8 h-8"
+            src=""
+            alt={`${user?.firstName || "Guest"} profile`}
+          />
+          <span>{`${user?.firstName || "Guest"} ${user?.lastName || ""}`}</span>
+        </div>
+
+        {showLogout && (
+          <button
+            onClick={handleLogout}
+            className="fixed left-3 bottom-20 md:bottom-2 flex z-50 items-center text-sm gap-2 rounded-lg transition bg-gray-400 px-2 py-1 hover:bg-gray-500 dark:bg-gray-600 hover:dark:bg-gray-500"
+            aria-label="Logout"
+          >
+            <LogOut />
+            Logout
+          </button>
+        )}
+      </footer>
+    </aside>
   );
 };
 

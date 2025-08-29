@@ -1,38 +1,58 @@
+import { useState } from "react";
 import Sidebar from "./Sidebar.jsx";
 import MainContent from "./MainContent.jsx";
-import { useState } from "react";
 
-const Home = ({Visible, toggleSidebar}) => {
-     
-     const [messages, setMessages] = useState([]);
+const Home = ({ visible, toggleSidebar }) => {
+  // 💬 State to hold chat messages
+  const [messages, setMessages] = useState([]);
 
-     const handleNewChat = () => {
-          setMessages([]);
-     }
+  // 🆕 Reset messages for a new chat session
+  const handleNewChat = () => {
+    setMessages([]);
+  };
 
-     const handleSend = (msg) => {
-          if (!msg.trim()) return;
-          // Add user message
-          const updatedMessages = [...messages, { role: "user", content: msg }];
-          // Simulate bot response (replace with API later)
-          const botReply = {
-               role: "bot",
-               content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus voluptatibus architecto et alias non ratione corrupti hic deserunt aspernatur placeat blanditiis repellat necessitatibus id enim aliquam, voluptas harum! Atque sequi, tempora labore esse debitis ipsam eligendi minima nemo explicabo commodi reiciendis perspiciatis blanditiis sint quibusdam, porro aperiam facere assumenda. Ad cupiditate repellendus nam fugiat, expedita quisquam qui animi repellat eaque odio possimus voluptatem exercitationem impedit atque nemo harum, accusantium nihil tenetur, incidunt itaque cumque inventore enim ea. Perspiciatis, animi aspernatur. Illo blanditiis veritatis soluta minima veniam provident quibusdam, quis odio sequi ipsa sed, modi cumque reprehenderit, eius incidunt nemo sint!`
-          };
-          setMessages([...updatedMessages, botReply]);
-     };
+  // 📤 Handle message send and simulate bot reply
+  const handleSend = (msg) => {
+    const trimmed = msg.trim();
+    if (!trimmed) return;
 
-     return (
-          <div className="flex w-screen h-screen bg-gray-50 dark:bg-gray-900">
-               {/* Sidebar */}
-               {
-                    Visible && <Sidebar newChat={handleNewChat} messages={messages} Visible={Visible} toggleSidebar={toggleSidebar}/>
-               }
+    const updatedMessages = [...messages, { role: "user", content: trimmed }];
 
-               {/* Main Content */}
-               <MainContent messages={messages} handleSend={handleSend}/>
-          </div>
-     );
+    // Simulated bot response (replace with API call)
+    const botReply = {
+      role: "assistant",
+      content:
+        "This is a simulated response. Replace this with your AI backend integration.",
+    };
+
+    setMessages([...updatedMessages, botReply]);
+  };
+
+  return (
+    // Semantic wrapper for layout
+    <section
+      className="flex w-full h-full bg-gray-50 dark:bg-gray-900"
+      role="region"
+      aria-label="Chat interface"
+    >
+      {/* 🧭 Sidebar */}
+      {visible && (
+        <Sidebar
+          newChat={handleNewChat}
+          messages={messages}
+          visible={visible}
+          toggleSidebar={toggleSidebar}
+        />
+      )}
+
+      {/* 💬 Main Chat Area */}
+      <MainContent
+        setMessages={setMessages}
+        messages={messages}
+        handleSend={handleSend}
+      />
+    </section>
+  );
 };
 
 export default Home;

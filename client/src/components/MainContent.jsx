@@ -1,26 +1,45 @@
+import { useState } from "react";
 import ChatInterface from "./ChatInterface";
 import InputBox from "./InputBox";
 
-const MainContent = ({ messages, handleSend }) => {
+const MainContent = ({ messages, handleSend, setMessages }) => {
+
+  const [loading, setLoading] = useState(false);
+  const [typeMessage, setTypeMessage] = useState("");
+
   return (
-    <main className="flex  flex-col flex-1 w-screen h-[calc(100vh-4rem)] md:h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 pt-14">
-      
+    // Semantic <main> for SEO and accessibility
+    <main
+      className="flex flex-col flex-1 w-screen h-full bg-white dark:bg-gray-900 text-black dark:text-gray-100 pt-14 pb-2"
+      role="main"
+      aria-label="Chat interface"
+    >
       {/* Chat Area */}
-      <div className="flex-1 overflow-y-auto scrollbar-thin space-y-5 scrollbar-thumb-gray-400 scrollbar-track-transparent px-6">
-        <ChatInterface messages={messages} />
-      </div>
+      <section
+        className="flex-1 overflow-y-auto scrollbar-thin space-y-5 scrollbar-thumb-gray-400 scrollbar-track-transparent px-6"
+        aria-label="Conversation history"
+      >
+        <ChatInterface messages={messages} setMessages={setMessages} loading={loading} typeMessage={typeMessage}/>
+      </section>
 
       {/* Input Box */}
-      <div className="px-3">
-        <InputBox onSend={handleSend} />
-      </div>
+      <section className="px-3" aria-label="Message input">
+        <InputBox onSend={handleSend} messages={messages} setMessages={setMessages} loading={loading} setLoading={setLoading} setTypeMessage={setTypeMessage}/>
+      </section>
 
-      {/* Footer Message */}
-      <div className="flex items-center justify-center w-full px-6 py-2 text-sm text-gray-600 dark:text-gray-300 text-center">
+      {/* Footer Disclaimer */}
+      <footer
+        className="flex items-center justify-center w-full px-6 py-2 text-sm text-gray-800 dark:text-gray-300 text-center"
+        aria-label="Disclaimer"
+      >
         <p>
-          AI Chatbot can make mistakes. Check important info. See <span className="underline">Cookies Preferences</span>
+          AI Chatbot may generate inaccurate information. Please verify important details. See{" "}
+          <a href="#" className="underline text-blue-600 dark:text-blue-400">
+            Cookie Preferences
+          </a>
+          .
         </p>
-      </div>
+      </footer>
     </main>
   );
 };
