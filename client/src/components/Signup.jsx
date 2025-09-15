@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { X } from "lucide-react";
 import { Helmet } from "react-helmet";
+import toast from "react-hot-toast";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 
 export default function Signup() {
@@ -36,12 +37,13 @@ export default function Signup() {
         headers: { 'Content-Type': 'application/json' }
       });
 
-      alert(data.message || 'Signup successful!');
+      toast.success(data.message || 'Signup successful!');
       navigate('/signin');
-    } catch (err) {
-      const msg = err?.response?.data?.errors || "Signup failed";
-      setError(msg);
-      console.error("Signup error:", err);
+    } catch (error) {
+      if (error?.response?.data?.errors) {
+        setError(error.response.data.errors);
+      }
+      console.error('Signup error:', error);
     } finally {
       setLoading(false);
     }

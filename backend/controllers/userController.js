@@ -24,14 +24,14 @@ export const signup = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
 
   if (!firstName || !lastName || !email || !password) {
-    return res.status(400).json({ error: 'All fields are required' });
+    return res.status(400).json({ errors: 'All fields are required' });
   }
 
   try {
     await connectDB();
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(409).json({ error: 'User already exists' });
+      return res.status(409).json({ errors: 'User already exists' });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -45,7 +45,7 @@ export const signup = async (req, res) => {
     return res.status(201).json({ message: 'User created successfully', user: newUser });
   } catch (err) {
     console.error('Signup error:', err);
-    return res.status(500).json({ error: 'Internal server error' });
+    return res.status(500).json({ errors: 'Internal server error' });
   }
 };
 
@@ -54,19 +54,19 @@ export const login = async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return res.status(400).json({ error: 'Email and password are required' });
+    return res.status(400).json({ errors: 'Email and password are required' });
   }
 
   try {
     await connectDB();
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+      return res.status(404).json({ errors: 'User not found' });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+      return res.status(401).json({ errors: 'Invalid credentials' });
     }
 
     if (!process.env.JWT_SECRET) {
@@ -75,7 +75,6 @@ export const login = async (req, res) => {
 
     const token = generateToken(user._id);
     res.cookie('token', token, cookieOptions);
-
     return res.status(200).json({
       message: 'Login successful',
       token,
@@ -88,7 +87,7 @@ export const login = async (req, res) => {
     });
   } catch (err) {
     console.error('Login error:', err);
-    return res.status(500).json({ error: 'Internal server error' });
+    return res.status(500).json({ errors: 'Internal server error' });
   }
 };
 
@@ -100,7 +99,7 @@ export const logout =async (req, res) => {
     return res.status(200).json({ message: 'Logout successful' });
   } catch (err) {
     console.error('Logout error:', err);
-    return res.status(500).json({ error: 'Internal server error' });
+    return res.status(500).json({ errors: 'Internal server error' });
   }
 };
 
@@ -109,7 +108,7 @@ export const userHistory = async (req, res) => {
   const { userId } = req;
 
   if (!userId) {
-    return res.status(401).json({ error: 'Unauthorized: Missing user ID' });
+    return res.status(401).json({ errors: 'Unauthorized: Missing user ID' });
   }
 
   try {
@@ -122,6 +121,6 @@ export const userHistory = async (req, res) => {
     return res.status(200).json({ history });
   } catch (err) {
     console.error('History fetch error:', err);
-    return res.status(500).json({ error: 'Internal server error' });
+    return res.status(500).json({ errors: 'Internal server error' });
   }
 };

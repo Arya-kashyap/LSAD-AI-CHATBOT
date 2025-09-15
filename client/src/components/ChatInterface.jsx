@@ -4,12 +4,13 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { tomorrow as codeTheme } from "react-syntax-highlighter/dist/esm/styles/prism";
+import {useAuth} from '../context/AuthProvider'
 
 const ChatInterface = ({ messages, setMessages, loading, typeMessage }) => {
 
   const promptEndRef = useRef(null);
   const bottomRef = useRef(null);
-
+  const {authToken} = useAuth();
 
   // 🔄 Scroll to bottom on new message
   useEffect(() => {
@@ -57,7 +58,7 @@ const ChatInterface = ({ messages, setMessages, loading, typeMessage }) => {
                           </SyntaxHighlighter>
                         ) : (
                           <code
-                            className="bg-gray-800 px-1 py-0.5 rounded"
+                            className="bg-gray-200 dark:bg-gray-800 px-1 py-0.5 rounded"
                             {...props}
                           >
                             {children}
@@ -99,6 +100,11 @@ const ChatInterface = ({ messages, setMessages, loading, typeMessage }) => {
           <p className="text-sm text-gray-700 dark:text-gray-300">
             How can I help you today?
           </p>
+          {!authToken && (
+            <p className="text-xl text-gray-700 dark:text-gray-300">
+            Please, Login first, then you can use it.
+          </p>
+          )}
         </div>
       )}
 

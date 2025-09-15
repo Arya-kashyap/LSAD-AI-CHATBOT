@@ -4,6 +4,7 @@ import Navbar from './components/Navbar.jsx';
 import Home from './components/Home.jsx';
 import Signup from './components/Signup.jsx';
 import Signin from './components/Signin.jsx';
+import toast, { Toaster } from 'react-hot-toast';
 
 function App() {
   const [sidebarVisible, setSidebarVisible] = useState(false);
@@ -21,6 +22,7 @@ function App() {
           <Route path="/signin" element={<Signin />} />
         </Routes>
       {/* </main> */}
+      <Toaster />
     </div>
   );
 }

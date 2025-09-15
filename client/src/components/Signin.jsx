@@ -4,6 +4,7 @@ import axios from "axios";
 import { useAuth } from "../context/AuthProvider";
 import { X } from "lucide-react";
 import { Helmet } from "react-helmet";
+import toast from "react-hot-toast";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 
 export default function Signin() {
@@ -39,12 +40,13 @@ export default function Signin() {
       localStorage.setItem("token", data.token);
       setAuthToken(data.token);
 
-      alert(data.message || "Login successful!");
+      toast.success(data.message || "Login successful!");
       navigate("/");
-    } catch (err) {
-      const msg = err?.response?.data?.errors || "Login failed";
-      setError(msg);
-      console.error("Login error:", err);
+    } catch (error) {
+      if (error?.response?.data?.errors) {
+        setError(error.response.data.errors);
+      }
+      console.error('Signup error:', error);
     } finally {
       setLoading(false);
     }

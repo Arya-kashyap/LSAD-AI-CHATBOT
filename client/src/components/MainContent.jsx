@@ -10,7 +10,7 @@ const MainContent = ({ messages, handleSend, setMessages }) => {
   return (
     // Semantic <main> for SEO and accessibility
     <main
-      className="flex flex-col flex-1 w-screen h-full bg-white dark:bg-gray-900 text-black dark:text-gray-100 pt-14 pb-2"
+      className="flex flex-col flex-1 w-screen h-full bg-white dark:bg-gray-900 text-black dark:text-gray-100 pt-14 "
       role="main"
       aria-label="Chat interface"
     >

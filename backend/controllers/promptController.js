@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import { connectDB } from '../utils/dbConnect.js'; // optional utility
+import { connectDB } from '../utils/dbConnect.js'; 
 import { Groq } from 'groq-sdk';
 import Prompt from '../models/promptModel.js';
 
@@ -12,11 +12,11 @@ export const SendPrompt = async (req, res) => {
   const { userId } = req;
 
   if (!content?.trim()) {
-    return res.status(400).json({ error: 'Prompt content is required' });
+    return res.status(400).json({ errors: 'Prompt content is required' });
   }
 
   try {
-    await connectDB(); // ensures MongoDB is connected (optional but recommended)
+    await connectDB(); 
 
     const trimmedContent = content.trim();
 
@@ -35,7 +35,7 @@ export const SendPrompt = async (req, res) => {
 
     const reply = completion?.choices?.[0]?.message?.content?.trim();
     if (!reply) {
-      return res.status(502).json({ error: 'No response from assistant' });
+      return res.status(502).json({ errors: 'No response from assistant' });
     }
 
     // Save assistant response
