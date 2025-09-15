@@ -89,7 +89,7 @@ const Sidebar = ({ visible, toggleSidebar, messages, newChat }) => {
       </div>
 
       {/* Chat History */}
-      <div className="flex-1 h-3/4 md:h-2/3 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 dark:scrollbar-thumb-white/20 scrollbar-track-transparent space-y-3 py-2 px-1">
+      <div className="flex-1 h-2/3 md:h-2/3 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 dark:scrollbar-thumb-white/20 scrollbar-track-transparent space-y-3 py-2 px-1">
         {loading ? (
           <p className="text-sm text-gray-500 dark:text-gray-400">Loading history...</p>
         ) : error ? (
@@ -125,7 +125,7 @@ const Sidebar = ({ visible, toggleSidebar, messages, newChat }) => {
       </div>
 
       {/* Footer with user info and logout */}
-      <footer className="dark:bg-gray-700 bg-gray-300 rounded-xl">
+      <footer className="dark:bg-gray-700 bg-gray-300 rounded-xl mt-6 md:mt-0">
         <div
           className="flex items-center gap-x-3 cursor-pointer p-4"
           onClick={() => setShowLogout((prev) => !prev)}
@@ -142,7 +142,7 @@ const Sidebar = ({ visible, toggleSidebar, messages, newChat }) => {
         {showLogout && (
           <div
 
-            className="fixed left-3 bottom-20 flex z-50 items-center w-56 bg-gray-400 dark:bg-gray-600 border border-gray-400 dark:border-gray-600 rounded-xl py-1 px-2 shadow-lg"
+            className="fixed left-1 bottom-28 md:bottom-20 flex z-50 items-center w-56 bg-gray-400 dark:bg-gray-600 border border-gray-400 dark:border-gray-600 rounded-xl py-1 px-2 shadow-lg"
             aria-label="Logout"
           >
             <div className="w-full flex flex-col gap-1">
