@@ -142,7 +142,7 @@ const Sidebar = ({ visible, toggleSidebar, messages, newChat }) => {
         {showLogout && (
           <div
 
-            className="fixed left-1 bottom-28 md:bottom-20 flex z-50 items-center w-56 bg-gray-400 dark:bg-gray-600 border border-gray-400 dark:border-gray-600 rounded-xl py-1 px-2 shadow-lg"
+            className="fixed left-1 bottom-24 md:bottom-20 flex z-50 items-center w-56 bg-gray-400 dark:bg-gray-600 border border-gray-400 dark:border-gray-600 rounded-xl py-1 px-2 shadow-lg"
             aria-label="Logout"
           >
             <div className="w-full flex flex-col gap-1">
